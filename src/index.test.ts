@@ -7,26 +7,26 @@ test("generates email addresses with basic names", () => {
 
   assert.ok(Array.isArray(result));
   assert.ok(result.length > 0);
-  assert.ok(result.includes("john.doe@example.com"));
-  assert.ok(result.includes("johndoe@example.com"));
-  assert.ok(result.includes("j.doe@example.com"));
-  assert.ok(result.includes("jdoe@example.com"));
-  assert.ok(result.includes("john@example.com"));
+  assert.ok(result.some((r) => r.value === "john.doe@example.com"));
+  assert.ok(result.some((r) => r.value === "johndoe@example.com"));
+  assert.ok(result.some((r) => r.value === "j.doe@example.com"));
+  assert.ok(result.some((r) => r.value === "jdoe@example.com"));
+  assert.ok(result.some((r) => r.value === "john@example.com"));
 });
 
 test("handles single character names", () => {
   const result = guess("test.com", "a", "b");
 
   assert.ok(Array.isArray(result));
-  assert.ok(result.includes("a.b@test.com"));
-  assert.ok(result.includes("ab@test.com"));
-  assert.ok(result.includes("a@test.com"));
-  assert.ok(result.includes("b@test.com"));
+  assert.ok(result.some((r) => r.value === "a.b@test.com"));
+  assert.ok(result.some((r) => r.value === "ab@test.com"));
+  assert.ok(result.some((r) => r.value === "a@test.com"));
+  assert.ok(result.some((r) => r.value === "b@test.com"));
 });
 
 test("generates no duplicate email addresses", () => {
   const result = guess("example.com", "john", "smith");
-  const uniqueEmails = new Set(result);
+  const uniqueEmails = new Set(result.map((r) => r.value));
   assert.strictEqual(
     result.length,
     uniqueEmails.size,
@@ -73,7 +73,10 @@ test("includes all expected patterns", () => {
   ];
 
   for (const pattern of patterns) {
-    assert.ok(result.includes(pattern), `Missing pattern: ${pattern}`);
+    assert.ok(
+      result.some((r) => r.value === pattern),
+      `Missing pattern: ${pattern}`
+    );
   }
 });
 
@@ -81,8 +84,8 @@ test("handles domain correctly", () => {
   const result1 = guess("company.org", "test", "user");
   const result2 = guess("different.net", "test", "user");
 
-  assert.ok(result1.every((email) => email.endsWith("@company.org")));
-  assert.ok(result2.every((email) => email.endsWith("@different.net")));
+  assert.ok(result1.every((r) => r.value.endsWith("@company.org")));
+  assert.ok(result2.every((r) => r.value.endsWith("@different.net")));
 });
 
 test("should be case-insensitive", () => {

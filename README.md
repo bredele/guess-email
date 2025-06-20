@@ -14,7 +14,7 @@ $ npm install @bredele/guess-email
 import guess from "@bredele/guess-email";
 
 quess("example.com", "john", "doe");
-// => ...
+// => [{ pattern: 'firstlast', value: 'johndoe@example.com }, ...]
 ```
 
 ## Notes
