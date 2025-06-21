@@ -1,8 +1,8 @@
 {
   "name": "@bredele/guess-email",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generate a list of potential email addresses from a user’s first and last name.",
-  "main": "dist/cjs/index.js",
+  "main": "dist/cjs/src/index.js",
   "files": ["dist"],
   "exports": {
     "import": {
