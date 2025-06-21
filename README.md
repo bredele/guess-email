@@ -5,7 +5,7 @@ Generate a list of potential email addresses from a user’s first and last name
 ## Installation
 
 ```sh
-$ npm install @bredele/guess-email
+npm install @bredele/guess-email
 ```
 
 ## Usage
